@@ -14,28 +14,27 @@ def transform_date(data):
     data['date'] = pd.to_datetime(date, format='%Y/%m/%d')
 
 def fetchListing(target='TWSE'):
-    TWSE_LISTING_STOCK_URL = 'http://isin.twse.com.tw/isin/C_public.jsp?strMode=2'
-    TPEX_LISTING_STOCK_URL = 'http://isin.twse.com.tw/isin/C_public.jsp?strMode=4'
+    url = URL("http://isin.twse.com.tw/isin/C_public.jsp")
     match target:
         case 'TWSE':
-            result = requests.get(TWSE_LISTING_STOCK_URL)
+            result = requests.get(url.with_query({"strMode": 2}))
         case 'TPEX':
-            result = requests.get(TPEX_LISTING_STOCK_URL)
+            result = requests.get(url.with_query({"strMode": 4}))
     df = pd.read_html(result.text)[0]
+    df.columns = df.iloc[0]
+    df = df.iloc[2:]
+    df['代號'] = df['有價證券代號及名稱'].str.split(expand=True)[0]
+    df['名稱'] = df['有價證券代號及名稱'].str.split(expand=True)[1]
+    df = df.drop(columns=["有價證券代號及名稱"])
     df.to_csv(os.path.join(artifacts_root, f"{target}.csv"))
     return df
 
 def getListing(target='TWSE'):
-
     record_path = os.path.join(artifacts_root, f"{target}.csv")
     if os.path.exists(record_path):
         df = pd.read_csv(record_path)
     else:
         df = fetchListing(target=target)
-    df.columns = df.iloc[0]
-    df = df.iloc[2:]
-    df['代號'] = df['有價證券代號及名稱'].str.split(expand=True)[0]
-    df['名稱'] = df['有價證券代號及名稱'].str.split(expand=True)[1]
     return df
 
 
