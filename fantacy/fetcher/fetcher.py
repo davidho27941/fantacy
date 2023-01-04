@@ -3,6 +3,7 @@ import pandas as pd
 
 from yarl import URL
 from fantacy.fetcher.base import BaseFetcher
+from fantacy.fetcher.utils import getListing
 
 class TWSEFetcher(BaseFetcher):
     def __init__(self):
@@ -116,7 +117,6 @@ class TPEXFetcher(BaseFetcher):
                     columns=['Trade_Volume_1000', 'Trade_Value_1000',]
                 )
         )
-
         return DataFrame
     
     def fetch(
@@ -138,3 +138,18 @@ class TPEXFetcher(BaseFetcher):
         result = requests.get(self.url)
         parsedResult = self.transform(result)
         return parsedResult
+
+class Fetcher(BaseFetcher):
+    def __init__(self, sid):
+        self.sid = sid
+        self.fetcher = (
+            TWSEFetcher()
+            if str(self.sid) in getListing(target='TWSE')['代號'].to_list()
+            else TPEXFetcher()
+        )
+    #TODO: complete the funciton.
+    def fetch(self):
+        pass
+    #TODO: complete the funciton.
+    def transform(self):
+        return super().transform()
