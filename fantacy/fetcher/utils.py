@@ -2,6 +2,8 @@ import os
 import requests
 import pandas as pd
 
+from yarl import URL
+
 TWSE_LISTING_STOCK_URL = 'http://isin.twse.com.tw/isin/C_public.jsp?strMode=2'
 TPEX_LISTING_STOCK_URL = 'http://isin.twse.com.tw/isin/C_public.jsp?strMode=4'
 
