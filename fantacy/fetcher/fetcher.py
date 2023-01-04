@@ -116,7 +116,6 @@ class TPEXFetcher(BaseFetcher):
                     columns=['Trade_Volume_1000', 'Trade_Value_1000',]
                 )
         )
-        print(DataFrame.info())
 
         return DataFrame
     
