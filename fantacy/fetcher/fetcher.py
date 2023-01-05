@@ -86,7 +86,6 @@ class TPEXFetcher(BaseFetcher):
             "Transaction",
         ]
         DataFrame = DataFrame.iloc[:-1]
-        print(DataFrame.info())
         DataFrame = (
             DataFrame.astype(
                 {
