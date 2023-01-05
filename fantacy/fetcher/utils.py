@@ -36,39 +36,3 @@ def getListing(target='TWSE'):
     else:
         df = fetchListing(target=target)
     return df
-
-
-# Deprecated
-# def fetchTWSEListingStock(url=TWSE_LISTING_STOCK_URL):
-#     if os.path.exists(artifacts_root+"/twse_listing.csv"):
-#         df = pd.read_csv(artifacts_root+"/twse_listing.csv")
-#     else:
-#         result = requests.get(url)
-#         df = pd.read_html(result.text)[0]
-#     return df
-
-# def fetchTPEXListingStock(url=TPEX_LISTING_STOCK_URL):
-#     if os.path.exists(artifacts_root+"/tpex_listing.csv"):
-#         df = pd.read_csv(artifacts_root+"/tpex_listing.csv")
-#     else:
-#         result = requests.get(url)
-#         df = pd.read_html(result.text)[0]
-#     return df
-
-# def getTWSEListingStock():
-#     if os.path.exists(os.path.join(artifacts_root, "TWSE.csv")):
-#         TWSE_Listing_df = pd.read_csv()
-#     TWSE_Listing_df = fetchListing(target='TWSE')
-#     TWSE_Listing_df.columns = TWSE_Listing_df.iloc[0]
-#     TWSE_Listing_df = TWSE_Listing_df.iloc[2:]
-#     TWSE_Listing_df['代號'] = TWSE_Listing_df['有價證券代號及名稱'].str.split(expand=True)[0]
-#     TWSE_Listing_df['名稱'] = TWSE_Listing_df['有價證券代號及名稱'].str.split(expand=True)[1]
-#     return TWSE_Listing_df
-
-# def getTPEXListingStock():
-#     TPEX_Listing_Stock_df = fetchListing(target='TPEX')
-#     TPEX_Listing_Stock_df.columns = TPEX_Listing_Stock_df.iloc[0]
-#     TPEX_Listing_Stock_df = TPEX_Listing_Stock_df.iloc[2:]
-#     TPEX_Listing_Stock_df['代號'] = TPEX_Listing_Stock_df['有價證券代號及名稱'].str.split(expand=True)[0]
-#     TPEX_Listing_Stock_df['名稱'] = TPEX_Listing_Stock_df['有價證券代號及名稱'].str.split(expand=True)[1]
-#     return TPEX_Listing_Stock_df
