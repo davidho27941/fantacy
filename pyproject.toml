@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "fantacy"
+name = "fantasy"
 version = "0.1.0"
 description = "A pandas-based technical analysis package for stock market."
 authors = ["davidho27941 <davidho.prime@gmail.com>"]
