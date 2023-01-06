@@ -2,8 +2,8 @@ import requests
 import pandas as pd
 
 from yarl import URL
-from fantacy.fetcher.base import BaseFetcher
-from fantacy.fetcher.utils import getListing
+from fantasy.fetcher.base import BaseFetcher
+from fantasy.fetcher.utils import getListing
 
 
 class TWSEFetcher(BaseFetcher):
