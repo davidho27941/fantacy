@@ -151,7 +151,7 @@ class Fetcher(BaseFetcher):
         )
 
     def transform(self, result):
-        if self.require_volume:
+        if not self.require_volume:
             result = result[self.col_without_volume]
 
         return result
