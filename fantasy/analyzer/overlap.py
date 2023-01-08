@@ -70,3 +70,23 @@ class overlap():
             - 3 * dataframe[f"EMA_of_EMA_{interval}"]
             - dataframe[f"EMA_{interval}"]
         )
+
+    @staticmethod
+    def TRIMA(
+        dataframe: pd.DataFrame,
+        interval: int = 5,
+        target_col: str = "Close",
+    ):
+        str_obj = dataframe.columns.str
+        if str_obj.contains(pat="^MA", regex=True).sum() == 0:
+            dataframe.pipe(
+                BasicAnalyzer.SMA,
+                interval=interval,
+                target_col=target_col,
+            )
+
+        dataframe[f'TRIMA_{interval}'] = (
+            dataframe[f'MA_{interval}']
+            .rolling(interval)
+            .apply(lambda x: x.sum() / x.shape[0])
+        )
