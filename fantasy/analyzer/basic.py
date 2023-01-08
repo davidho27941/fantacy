@@ -13,12 +13,28 @@ class BasicAnalyzer:
         dataframe: pd.DataFrame,
         interval: int = 5,
         target_col: str = "Close",
+        is_SMA_of_SMA: bool=False,
     ):
-        dataframe[f"MA_{interval}"] = (
-            dataframe[target_col]
-            .rolling(interval)
-            .apply(lambda x: x.sum() / x.shape[0])
-        )
+        if is_SMA_of_SMA:
+            str_obj = dataframe.columns.str
+            if str_obj.contains(pat="^MA_[A-z]", regex=True).sum() == 0:
+                dataframe[f"MA_of_MA_{interval}"] = (
+                    dataframe[target_col]
+                    .rolling(interval)
+                    .apply(lambda x: x.sum() / x.shape[0])
+                )
+            elif str_obj.contains(pat="^MA_[A-z]", regex=True).sum() == 1:
+                dataframe[f"Tri_MA_{interval}"] = (
+                    dataframe[target_col]
+                    .rolling(interval)
+                    .apply(lambda x: x.sum() / x.shape[0])
+                )
+        else:
+            dataframe[f"MA_{interval}"] = (
+                dataframe[target_col]
+                .rolling(interval)
+                .apply(lambda x: x.sum() / x.shape[0])
+            )
         return dataframe
 
     @staticmethod
