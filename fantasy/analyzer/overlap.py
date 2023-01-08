@@ -3,7 +3,7 @@ import numpy as np
 
 from .basic import BasicAnalyzer
 
-class overlap():
+class Overlap():
     @staticmethod
     def DEMA(
         dataframe: pd.DataFrame,
@@ -89,4 +89,25 @@ class overlap():
             dataframe[f'MA_{interval}']
             .rolling(interval)
             .apply(lambda x: x.sum() / x.shape[0])
+        )
+    
+    @staticmethod
+    def KAMA(
+        dataframe: pd.DataFrame,
+        interval: int = 5,
+        f: int = 2, 
+        s: int = 30, 
+    ):
+        dataframe['Direction'] = (
+            dataframe['Close']
+            .rolling(2)
+            .apply(np.diff)
+        )
+        dataframe['Volatility'] = (
+            dataframe['Direction']
+            .rolling(interval)
+            .apply(lambda x: x.abs().sum())
+        )
+        dataframe['ER'] = (
+            np.abs(dataframe['Direction'] / dataframe['Volatility'])
         )
